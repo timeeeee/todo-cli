@@ -1,0 +1,8 @@
+alembic==1.8.1
+greenlet==2.0.1
+importlib-metadata==5.1.0
+importlib-resources==5.10.1
+Mako==1.2.4
+MarkupSafe==2.1.1
+SQLAlchemy==1.4.45
+zipp==3.11.0
