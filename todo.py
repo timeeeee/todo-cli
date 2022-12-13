@@ -50,7 +50,8 @@ get_category_parser.add_argument("category_id", nargs="?")
 get_category_parser.add_argument("-a", "--all", default=False)
 
 update_category_parser = category_subparsers.add_parser("update")
-update_category_parser.add_argument("-i", "--interactive", action="store_true")
+update_category_parser.add_argument("category_id")
+update_category_parser.add_argument("name", nargs="?")
 
 delete_category_parser = category_subparsers.add_parser("delete")
 delete_category_parser.add_argument("category_id")

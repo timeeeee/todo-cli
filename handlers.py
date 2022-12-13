@@ -49,7 +49,17 @@ def get_category(args: argparse.Namespace):
 
             
 def update_category(args: argparse.Namespace):
-    ...
+    with sqlalchemy.orm.Session(engine) as session:
+        category = session.get(Category, args.category_id)
+
+        if args.name is None:
+            name = input(f"Name (currently {category.name}): ")
+        else:
+            name = args.name
+            print(f"renaming category {category.category_id} from {category.name} to {name}")
+
+        category.name = name
+        session.commit()
 
 
 def delete_category(args: argparse.Namespace):
