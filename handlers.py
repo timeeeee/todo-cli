@@ -1,10 +1,12 @@
 import argparse
-import os
 
 import sqlalchemy
+from sqlalchemy import select
 
-sql_uri = os.env["TODO_DB"]
-engine = sqlalchemy.create_engine(sql_uri)
+import settings
+from db.schema import Category
+
+engine = sqlalchemy.create_engine(settings.sql_uri)
 
 def get_with_prompts(field_names):
     results = {}
@@ -16,7 +18,7 @@ def get_with_prompts(field_names):
 
 
 def new_category(args: argparse.Namespace):
-    if argparse.Namespace.is_interactive:
+    if args.is_interactive:
         fields = get_with_prompts({
             "name": "Name",
         })
@@ -25,14 +27,27 @@ def new_category(args: argparse.Namespace):
     else:
         name = args.name
 
-    with engine.begin() as conn:
-        
+
+    with sqlalchemy.orm.Session(engine) as session:
+        c = Category(name=name)
+        session.add(c)
+        session.commit()
 
     
 def get_category(args: argparse.Namespace):
-    ...
+    if args.category_id is None:
+        with sqlalchemy.orm.Session(engine) as session:
+            categories = session.execute(select(Category)).all()
+    else:
+        with sqlalchemy.orm.Session(engine) as session:
+            query = select(Category).where(Category.category_id == args.category_id)
+            categories = session.execute(query).all()
 
+    for row in categories:
+        category = row[0]
+        print(f"{category.category_id}: {category.name}")
 
+            
 def update_category(args: argparse.Namespace):
     ...
 

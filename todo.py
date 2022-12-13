@@ -42,16 +42,17 @@ category_parser = subparsers.add_parser("category")
 category_subparsers = category_parser.add_subparsers(title="action", dest="action")
 
 new_category_parser = category_subparsers.add_parser("new")
+new_category_parser.add_argument("name", nargs="?")
+new_category_parser.add_argument("-i", "--interactive", action="store_true", dest="is_interactive")
+
 get_category_parser = category_subparsers.add_parser("get")
+get_category_parser.add_argument("category_id", nargs="?")
+get_category_parser.add_argument("-a", "--all", default=False)
+
 update_category_parser = category_subparsers.add_parser("update")
-delete_category_parser = category_subparsers.add_parser("delete")
-
-new_category_parser.add_argument("-i", "--interactive", action="store_true")
-
-get_category_parser.add_argument("category_id")
-
 update_category_parser.add_argument("-i", "--interactive", action="store_true")
 
+delete_category_parser = category_subparsers.add_parser("delete")
 delete_category_parser.add_argument("category_id")
 
 
