@@ -63,4 +63,8 @@ def update_category(args: argparse.Namespace):
 
 
 def delete_category(args: argparse.Namespace):
-    ...
+    # TODO: what happens when tasks or projects have this category?
+    with sqlalchemy.orm.Session(engine) as session:
+        category = session.get(Category, args.category_id)
+        session.delete(category)
+        session.commit()
