@@ -43,7 +43,6 @@ category_subparsers = category_parser.add_subparsers(title="action", dest="actio
 
 new_category_parser = category_subparsers.add_parser("new")
 new_category_parser.add_argument("name", nargs="?")
-new_category_parser.add_argument("-i", "--interactive", action="store_true", dest="is_interactive")
 
 get_category_parser = category_subparsers.add_parser("get")
 get_category_parser.add_argument("category_id", nargs="?")
